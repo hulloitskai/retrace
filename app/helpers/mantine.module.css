@@ -1,0 +1,15 @@
+.button {
+  font-weight: 700;
+
+  [data-mantine-color-scheme="dark"] :global(.mantine-Card-root) & {
+    --_disabled-bg: var(--mantine-color-dark-7);
+  }
+}
+
+.emailText {
+  --text-color: var(--mantine-color-gray-8);
+}
+
+.focus {
+  outline-width: 1px;
+}

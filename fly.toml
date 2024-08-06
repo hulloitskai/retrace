@@ -1,0 +1,50 @@
+app = "retrace"
+primary_region = "den"
+kill_signal = "SIGINT"
+swap_size_mb = 1024
+
+[experimental]
+  auto_rollback = true
+
+[deploy]
+  release_command = "bin/deploy"
+  strategy = "bluegreen"
+
+[env]
+  RAILS_DEFAULT_URL = "https://retrace.photos"
+  RAILS_MAILER_FROM = "Retrace <robot@retrace.photos>"
+  RAILS_MAILER_REPLY_TO = "Retrace Team <hello@retrace.photos>"
+  SENTRY_TRACES_SAMPLE_RATE = "0.1"
+  SENTRY_PROFILES_SAMPLE_RATE = "0.1"
+  PENCIEVE_RECEIVER_DISABLED = "true"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 3000
+  processes = ["app"]
+
+[services.concurrency]
+  type = "requests"
+  hard_limit = 1000
+  soft_limit = 100
+
+[[services.ports]]
+  port = 80
+  handlers = ["http"]
+  force_https = true
+
+[[services.ports]]
+  port = 443
+  handlers = ["tls", "http"]
+
+[[services.http_checks]]
+  interval = "15s"
+  timeout = "2s"
+  grace_period = "10s"
+  method = "get"
+  path = "/status"
+  protocol = "http"
+
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/"

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%# == Favicon %>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <%# == Fonts %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
+
+    <%# == Viewport %>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <%# == Content Security Policy %>
+    <%= csp_meta_tag %>
+
+    <%# == CSRF %>
+    <meta name="csrf-param" content="<%= request_forgery_protection_token %>" inertia>
+    <meta name="csrf-token" content="<%= form_authenticity_token %>" inertia>
+
+    <%# == Environment %>
+    <meta name="env" content="<%= Rails.env %>">
+
+    <%# == Action Cable %>
+    <%= action_cable_meta_tag %>
+
+    <%# == Active Storage %>
+    <meta name="active-storage-direct-uploads-url" content="<%= rails_direct_uploads_path %>">
+
+    <%# == Sentry %>
+    <% scoped do %>
+      <% config = Sentry.configuration %>
+      <% if (dsn = config.dsn.presence) %>
+        <meta name="sentry-dsn" content="<%= dsn %>">
+        <meta name="sentry-traces-sample-rate" content="<%= config.traces_sample_rate %>">
+      <% end %>
+    <% end %>
+
+    <%# == FullStory %>
+    <% if (org_id = ENV["FULLSTORY_ORG_ID"].presence) %>
+      <meta name="fullstory-org-id" content="<%= org_id %>">
+    <% end %>
+
+    <%# == Clarity %>
+    <% if (project_id = ENV["CLARITY_PROJECT_ID"].presence) %>
+      <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "<%= project_id %>");
+      </script>
+    <% end %>
+
+    <%# == Vite %>
+    <%= vite_client_tag %>
+    <%#= vite_typescript_tag "spotlight" if Rails.env.development? %>
+    <% if local_assigns.include?(:page) %>
+      <%= vite_react_refresh_tag %>
+      <%= vite_typescript_tag "application", media: nil %>
+    <% end %>
+
+    <%# == Google Analytics %>
+    <% if (measurement_id = ENV["GOOGLE_ANALYTICS_MEASUREMENT_ID"].presence) %>
+      <script src="https://www.googletagmanager.com/gtag/js?id=<%= measurement_id %>" async></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag("js", new Date());
+        gtag("config", "<%= measurement_id %>");
+      </script>
+    <% end %>
+
+    <% # == Mapbox %>
+    <% if (token = ENV["MAPBOX_ACCESS_TOKEN"].presence) %>
+      <meta name="mapbox-access-token" content="<%= token %>">
+    <% end %>
+
+    <%# == Inertia %>
+    <%== inertia_headers %>
+    <%== inertia_assets type: :page, media: nil %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

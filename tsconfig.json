@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    // == Paths
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["app/*"]
+    },
+
+    // == Language
+    "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+
+    // == Mode
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "noEmit": true,
+
+    // == Linting
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // == Plugins
+    "plugins": [
+      { "name": "typescript-plugin-css-modules" },
+      { "name": "vite-plugin-iso-import" }
+    ]
+  },
+  "include": ["app/**/*.ts", "app/**/*.tsx", "typings/**/*.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

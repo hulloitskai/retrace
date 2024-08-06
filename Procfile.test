@@ -1,0 +1,4 @@
+postgres: docker compose up --no-log-prefix postgres-test
+mailcatcher: docker compose up --no-log-prefix mailcatcher
+vite-ssr: bin/vite ssr
+rails: sleep 2 && bin/rails db:prepare && bin/rails test:all || exit -1
