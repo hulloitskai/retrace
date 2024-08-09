@@ -12,8 +12,7 @@ brew install docker rbenv nodenv yarn watchman overmind
 brew install libvips ffmpeg
 
 # set up environment
-git clone git@github.com:hulloretrace/retrace
+git clone git@github.com:hulloitskai/retrace
 cd retrace
 bin/setup
-kk
 ```
