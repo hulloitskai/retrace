@@ -1,6 +1,6 @@
 # Retrace
 
-_Retrace your life journey using your iPhone photos._
+_Visualize your iPhone photo album on an animated map._
 
 ## setup
 
@@ -15,4 +15,5 @@ brew install libvips ffmpeg
 git clone git@github.com:hulloretrace/retrace
 cd retrace
 bin/setup
+kk
 ```

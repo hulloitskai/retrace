@@ -159,7 +159,7 @@ gem "telegram-bot-ruby", "~> 2.0", require: 'telegram/bot'
 gem "bcrypt", "~> 3.1"
 
 # Control the browser with Playwright
-# gem "playwright-ruby-client", "~> 1.43", require: 'playwright'
+gem "playwright-ruby-client", "~> 1.45", require: 'playwright'
 
 # OpenAI client
 gem "ruby-openai", "~> 6.3"

@@ -57,7 +57,7 @@ const ImageInput: FC<ImageInputProps> = ({
   px,
   py = 2,
   p,
-  radius = "md",
+  radius,
   center,
   style,
 }) => {
@@ -116,7 +116,7 @@ const ImageInput: FC<ImageInputProps> = ({
           <Image
             w="100%"
             h="100%"
-            {...{ radius }}
+            radius={radius ?? "var(--mantine-radius-default)"}
             src={image?.src}
             srcSet={image?.srcSet}
           />

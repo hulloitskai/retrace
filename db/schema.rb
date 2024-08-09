@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_180260) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_08_142937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -42,6 +42,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_180260) do
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "albums", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_albums_on_slug", unique: true
   end
 
   create_table "exploration_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -136,6 +144,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_180260) do
     t.datetime "updated_at", null: false
     t.jsonb "session"
     t.string "email", null: false
+  end
+
+  create_table "icloud_photo_downloads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "import_id", null: false
+    t.string "webpage_url", null: false
+    t.datetime "downloaded_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id"], name: "index_icloud_photo_downloads_on_import_id"
+    t.index ["webpage_url"], name: "index_icloud_photo_downloads_on_webpage_url", unique: true
+  end
+
+  create_table "icloud_photos_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "album_id", null: false
+    t.string "webpage_url", null: false
+    t.datetime "downloads_initialized_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_icloud_photos_imports_on_album_id"
+    t.index ["webpage_url", "album_id"], name: "index_icloud_photos_imports_on_webpage_url_and_album_id", unique: true
+    t.index ["webpage_url"], name: "index_icloud_photos_imports_on_webpage_url", unique: true
   end
 
   create_table "journal_entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -282,6 +311,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_180260) do
     t.index ["user_id"], name: "index_pensieve_recordings_on_user_id"
   end
 
+  create_table "photos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "album_id", null: false
+    t.uuid "download_id", null: false
+    t.geometry "coordinates", limit: {:srid=>0, :type=>"st_point"}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_photos_on_album_id"
+    t.index ["download_id"], name: "index_photos_on_download_id"
+  end
+
   create_table "task_records", id: false, force: :cascade do |t|
     t.string "version", null: false
   end
@@ -333,9 +372,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_180260) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "icloud_photo_downloads", "icloud_photos_imports", column: "import_id"
+  add_foreign_key "icloud_photos_imports", "albums"
   add_foreign_key "location_accesses", "location_access_grants", column: "grant_id"
   add_foreign_key "location_log_addresses", "location_logs"
   add_foreign_key "obsidian_relations", "obsidian_notes", column: "from_id"
   add_foreign_key "pensieve_message_likes", "pensieve_messages", column: "message_id"
   add_foreign_key "pensieve_recordings", "users"
+  add_foreign_key "photos", "albums"
+  add_foreign_key "photos", "icloud_photo_downloads", column: "download_id"
 end

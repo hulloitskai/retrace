@@ -10,6 +10,12 @@ module GeneratedPathHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def album_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def albums_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def contact_url_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -4,6 +4,16 @@
   [data-mantine-color-scheme="dark"] :global(.mantine-Card-root) & {
     --_disabled-bg: var(--mantine-color-dark-7);
   }
+
+  &:not([disabled]) {
+    &:not([data-variant]),
+    &[data-variant="filled"] {
+      &:hover {
+        background-color: var(--button-bg);
+        opacity: 0.8;
+      }
+    }
+  }
 }
 
 .emailText {
@@ -11,5 +21,15 @@
 }
 
 .focus {
+  outline-color: var(--mantine-color-accent-outline);
   outline-width: 1px;
+}
+
+.input {
+  --mantine-color-error: var(--mantine-color-red-6);
+
+  input {
+    --input-bd-focus: var(--mantine-color-accent-outline);
+    font-size: var(--mantine-font-size-md);
+  }
 }

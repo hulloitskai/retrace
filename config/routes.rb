@@ -80,6 +80,9 @@ Rails.application.routes.draw do
   # == Contact
   resource :contact_url, only: :show, export: true
 
+  # == Albums
+  resources :albums, only: %i[create show], export: true
+
   # == Pages
   defaults export: true do
     root "home#show"

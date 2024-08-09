@@ -23,14 +23,29 @@ declare module "@mantine/core" {
   }
 }
 
+const stone: MantineColorsTuple = [
+  "#fafaf9",
+  "#f5f5f4",
+  "#e7e5e4",
+  "#d6d3d1",
+  "#a8a29e",
+  "#78716c",
+  "#57534e",
+  "#44403c",
+  "#292524",
+  "#1c1917",
+  "#0c0a09",
+];
+
 export const THEME = createTheme({
   autoContrast: true,
   colors: {
-    primary: DEFAULT_THEME.colors.pink,
-    accent: DEFAULT_THEME.colors.teal,
+    dark: stone,
+    primary: stone,
+    accent: DEFAULT_THEME.colors.pink,
   },
   primaryColor: "primary",
-  defaultRadius: "md",
+  defaultRadius: 0,
   fontFamily:
     "Manrope, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, " +
     "Arial, sans-serif",
@@ -86,11 +101,12 @@ export const THEME = createTheme({
       },
     }),
     TextInput: TextInput.extend({
-      styles: ({ fontSizes }) => ({
-        input: {
-          fontSize: fontSizes.md,
-        },
-      }),
+      defaultProps: {
+        variant: "filled",
+      },
+      classNames: {
+        root: classes.input,
+      },
     }),
     ThemeIcon: ThemeIcon.extend({
       defaultProps: {

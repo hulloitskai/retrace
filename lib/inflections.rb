@@ -20,4 +20,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym("GlobalID")
   inflect.acronym("GraphQL")
   inflect.acronym("OAuth")
+
+  # == Application
+  inflect.acronym("ICloud")
 end

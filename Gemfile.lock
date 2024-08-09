@@ -346,7 +346,7 @@ GEM
       activerecord (>= 5.2)
       activesupport (>= 5.2)
     phonelib (0.6.58)
-    playwright-ruby-client (1.43.1)
+    playwright-ruby-client (1.45.0)
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
     premailer (1.23.0)
@@ -646,6 +646,7 @@ DEPENDENCIES
   pg (~> 1.5)
   pg_search (~> 2.3)
   phonelib (~> 0.6.55)
+  playwright-ruby-client (~> 1.45)
   premailer-rails (~> 1.12)
   pry
   pry-doc

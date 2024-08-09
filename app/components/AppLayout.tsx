@@ -1,5 +1,6 @@
 import type { AppShellProps, ContainerProps, MantineSize } from "@mantine/core";
-import { AppShell, Breadcrumbs } from "@mantine/core";
+import { AppShell, Breadcrumbs, Button } from "@mantine/core";
+import MapIcon from "~icons/heroicons/map-20-solid";
 
 import type { AppMetaProps } from "./AppMeta";
 import AppMeta from "./AppMeta";
@@ -78,11 +79,14 @@ const AppLayout: FC<AppLayoutProps> = ({
         header={{ height: 44 }}
         padding={padding ?? (withContainer ? undefined : "md")}
         styles={{
+          root: {
+            "--app-shell-border-color": "var(--mantine-color-dark-6) ",
+          },
           header: {
             padding: 8,
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             columnGap: 6,
           },
           main: {
@@ -100,9 +104,10 @@ const AppLayout: FC<AppLayoutProps> = ({
           <Button
             component={Link}
             href={routes.home.show.path()}
+            leftSection={<MapIcon />}
             variant="subtle"
+            color="accent"
             size="compact-md"
-            radius="md"
             h="unset"
             py={4}
             px={6}

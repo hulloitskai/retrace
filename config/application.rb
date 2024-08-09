@@ -42,6 +42,7 @@ module Retrace
     # require "owner"
     require "admin"
     require "contact"
+    require "browserbase"
     # require "google"
 
     # == Constants

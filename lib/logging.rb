@@ -25,7 +25,6 @@ module Logging
 
     sig { overridable.params(block: T.proc.void).void }
     def with_log_tags(&block)
-      logger = self.logger
       if logger.respond_to?(:tagged)
         logger.public_send(:tagged, name, &block)
       end

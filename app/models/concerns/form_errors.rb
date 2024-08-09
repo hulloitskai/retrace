@@ -13,7 +13,7 @@ module FormErrors
   def errors; end
 
   # == Methods
-  sig { returns(T::Hash[String, String]) }
+  sig { returns(T::Hash[Symbol, String]) }
   def form_errors
     errors = {}
     self.errors.attribute_names.each do |name|
