@@ -11,7 +11,8 @@ class AlbumsController < ApplicationController
     raise "Missing album" unless @album
     render(inertia: "AlbumPage", props: {
       album: AlbumSerializer.one(@album),
-      "downloadWebpageUrls" => @album.downloads.pluck(:webpage_url),
+      downloads: ICloudPhotoDownloadSerializer
+        .many(@album.downloads.with_attached_image.chronological),
     })
   end
 

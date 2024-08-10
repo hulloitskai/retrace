@@ -83,6 +83,13 @@ Rails.application.routes.draw do
   # == Albums
   resources :albums, only: %i[create show], export: true
 
+  # == ICloud Photo Downloads
+  resources :icloud_photo_downloads, only: %i[], export: true do
+    member do
+      post :download
+    end
+  end
+
   # == Pages
   defaults export: true do
     root "home#show"

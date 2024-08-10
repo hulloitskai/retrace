@@ -65,45 +65,24 @@ class ICloudPhotosImport < ApplicationRecord
       end
       first_item = content_frame.locator(".PhotoItemView").first
       first_item.locator("img").wait_for(state: "attached")
-      first_item.click
+      page.expect_navigation { first_item.click }
       skipped_urls = []
       (0...item_count).each do |i|
-        with_log_tags do
-          logger.info("Processing carousel item #{i}")
-        end
-        before_load_webpage_timestamp = Time.current
-        begin
-          page.wait_for_url("**/#{i}/", timeout: 1000)
-        rescue Playwright::TimeoutError
-          raise unless page.url.ends_with?("/#{i}/")
-        end
-        with_log_tags do
-          load_time = Time.current - before_load_webpage_timestamp
-          logger.info(
-            "  Loaded webpage: #{page.url}, took " \
-              "#{load_time.round(2)}s",
-          )
-        end
+        with_log_tags { logger.info("Processing carousel item #{i + 1}") }
         carousel_item_classes = content_frame
           .locator(".OneUpCarouselItem.is-center .ProgressiveImageElement")
           .wait_for(state: "attached")
           .get_attribute("class")
           .split(" ")
         if carousel_item_classes.exclude?("VideoPlayer-progressiveImage")
-          with_log_tags do
-            logger.info("  Found photo; creating download")
-          end
+          with_log_tags { logger.info("  Found photo; creating download") }
           downloads.find_or_create_by!(webpage_url: page.url)
-          with_log_tags do
-            logger.info("  Created download")
-          end
+          with_log_tags { logger.info("  Created download") }
         else
           skipped_urls << page.url
-          with_log_tags do
-            logger.info("  Found video; skipping")
-          end
+          with_log_tags { logger.info("  Found video; skipping") }
         end
-        page.keyboard.press("ArrowRight")
+        page.expect_navigation { page.keyboard.press("ArrowRight") }
       end
       update!(downloads_initialized_at: Time.current)
       with_log_tags do

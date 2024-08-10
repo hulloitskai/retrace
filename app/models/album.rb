@@ -46,4 +46,10 @@ class Album < ApplicationRecord
   def initial_import
     imports.first
   end
+
+  # == Downloads
+  sig { void }
+  def download_pending_later
+    downloads.pending.find_each(&:download_later)
+  end
 end

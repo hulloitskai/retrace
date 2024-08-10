@@ -11,6 +11,11 @@ class ImageSerializer < FileSerializer
   # == Attributes
   attribute :src, type: :string do
     rails_representation_path(blob)
+  rescue ActiveStorage::UnrepresentableError => error
+    with_log_tags do
+      logger.warn("Failed to get representation for Blob #{blob.id}: #{error}")
+    end
+    rails_blob_path(blob)
   end
 
   attribute :src_set, type: :string do
@@ -19,5 +24,10 @@ class ImageSerializer < FileSerializer
       "#{rails_representation_path(representation)} #{size}w"
     end
     sources.join(", ")
+  rescue ActiveStorage::UnrepresentableError => error
+    with_log_tags do
+      logger.warn("Failed to get representation for Blob #{blob.id}: #{error}")
+    end
+    [rails_blob_path(blob)]
   end
 end

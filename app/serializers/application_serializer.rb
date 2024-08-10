@@ -4,6 +4,7 @@ class ApplicationSerializer < Oj::Serializer
   extend T::Sig
   include TypesFromSerializers::DSL
   include Routing
+  include Logging
 
   # == Configuration
   transform_keys :camelize

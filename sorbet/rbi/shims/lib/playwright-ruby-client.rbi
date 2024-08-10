@@ -167,5 +167,18 @@ module Playwright
 
     sig { returns(String) }
     def url; end
+
+    sig do
+      params(
+        predicate: T.untyped,
+        timeout: T.untyped,
+        block: T.proc.void,
+      ).returns(Download)
+    end
+    def expect_download(
+      predicate: T.unsafe(nil),
+      timeout: T.unsafe(nil),
+      &block
+    ); end
   end
 end

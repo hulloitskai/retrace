@@ -1,50 +1,60 @@
-import type { Album } from "~/types";
+import type { Album, ICloudPhotoDownload } from "~/types";
+import { Image } from "@mantine/core";
 
+import ICloudPhotoDownloadButton from "~/components/ICloudPhotoDownloadButton";
 import AppLayout from "~/components/AppLayout";
 
 export interface HomePageProps extends SharedPageProps {
   album: Album;
-  downloadWebpageUrls: string[];
+  downloads: ICloudPhotoDownload[];
 }
 
-const AlbumPage: PageComponent<HomePageProps> = ({
-  album,
-  downloadWebpageUrls: initialDownloadWebpageUrls,
-}) => {
+const AlbumPage: PageComponent<HomePageProps> = ({ album, downloads }) => {
   // == Download webpage URLs
-  const [downloadWebpageUrls, setDownloadWebpageUrls] = useState(
-    initialDownloadWebpageUrls,
-  );
   useSubscription<{
-    downloadWebpageUrl: string;
-  }>("AlbumDownloadCreatedChannel", {
+    download: ICloudPhotoDownload;
+  }>("AlbumDownloadsChannel", {
     descriptor: "subscribe to album downloads",
     params: {
       album_id: album.id,
     },
-    onData: ({ downloadWebpageUrl }) => {
-      setDownloadWebpageUrls(prevUrls => [...prevUrls, downloadWebpageUrl]);
+    onData: () => {
+      router.reload({ only: ["downloads"] });
     },
   });
 
   return (
     <Stack>
       <Title size="h2">{album.title}</Title>
-      {!isEmpty(downloadWebpageUrls) && (
+      {!isEmpty(downloads) && (
         <Box>
           <Title order={2} size="h5">
             iCloud image download links:
           </Title>
-          {downloadWebpageUrls.map(url => (
-            <Anchor
-              key={url}
-              href={url}
-              truncate
-              style={{ display: "block", minWidth: 0 }}
-            >
-              {url}
-            </Anchor>
-          ))}
+          <List>
+            {downloads.map(download => (
+              <List.Item key={download.id}>
+                <Anchor href={download.webpageUrl}>{download.id}</Anchor>
+                {download.image ? (
+                  <Image
+                    srcSet={download.image.srcSet}
+                    alt={download.image.filename}
+                    w={140}
+                  />
+                ) : (
+                  <>
+                    {" "}
+                    (
+                    <ICloudPhotoDownloadButton
+                      variant="default"
+                      {...{ download }}
+                    />
+                    )
+                  </>
+                )}
+              </List.Item>
+            ))}
+          </List>
         </Box>
       )}
     </Stack>
