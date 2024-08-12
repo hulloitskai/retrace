@@ -1,6 +1,7 @@
 .popup {
   > :global(.mapboxgl-popup-content) {
-    padding: 0;
+    padding: 8px;
+    border-radius: 0;
     min-height: 40px;
   }
 }

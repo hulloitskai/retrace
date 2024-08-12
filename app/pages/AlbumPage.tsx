@@ -94,12 +94,13 @@ const AlbumPage: PageComponent<AlbumPageProps> = ({ album, imports }) => {
               key={photo.id}
               className={classes.popup}
               {...{ latitude, longitude }}
+              closeButton={false}
               anchor="bottom"
               // onClick={() => {
               //   setSelectedPhoto(photo);
               // }}
             >
-              <Image srcSet={image.srcSet} alt="" w={140} />
+              <Image srcSet={image.srcSet} alt="" w={140} h={140} />
             </Popup>
           );
         })}
