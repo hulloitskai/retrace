@@ -7,5 +7,5 @@
 
 class ICloudPhotoDownloadSerializer
   sig { returns(ICloudPhotoDownload) }
-  def icloud_photo_download; end
+  def download; end
 end

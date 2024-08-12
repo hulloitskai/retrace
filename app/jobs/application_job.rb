@@ -5,6 +5,7 @@ class ApplicationJob < ActiveJob::Base
   extend T::Sig
   extend T::Helpers
   include GoodJob::ActiveJobExtensions::Concurrency
+  include Logging
 
   # == Configuration
   # Automatically retry jobs that encountered a deadlock/

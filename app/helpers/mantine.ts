@@ -42,6 +42,7 @@ export const THEME = createTheme({
   colors: {
     dark: stone,
     primary: stone,
+    // accent: uglyGreen,
     accent: DEFAULT_THEME.colors.pink,
   },
   primaryColor: "primary",
@@ -74,6 +75,11 @@ export const THEME = createTheme({
     Button: Button.extend({
       classNames: {
         root: classes.button,
+      },
+    }),
+    Card: Card.extend({
+      classNames: {
+        root: classes.card,
       },
     }),
     Loader: Loader.extend({

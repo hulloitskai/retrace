@@ -42,6 +42,7 @@ module Retrace
     # require "owner"
     require "admin"
     require "contact"
+    require "browsing"
     require "browserbase"
     # require "google"
 

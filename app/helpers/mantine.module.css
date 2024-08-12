@@ -16,6 +16,12 @@
   }
 }
 
+.card {
+  :where([data-mantine-color-scheme="dark"]) &[data-with-border] {
+    border-color: lighten(var(--mantine-color-dark-5), 10%);
+  }
+}
+
 .emailText {
   --text-color: var(--mantine-color-gray-8);
 }

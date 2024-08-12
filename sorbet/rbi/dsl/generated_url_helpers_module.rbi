@@ -22,6 +22,9 @@ module GeneratedUrlHelpersModule
   def destroy_user_session_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def download_icloud_photo_download_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_user_password_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -59,6 +62,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def password_strength_checks_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def photos_album_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def rails_blob_representation_proxy_url(*args); end

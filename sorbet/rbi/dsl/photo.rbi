@@ -601,51 +601,6 @@ class Photo
     sig { void }
     def album_id_will_change!; end
 
-    sig { returns(T.untyped) }
-    def coordinates; end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def coordinates=(value); end
-
-    sig { returns(T::Boolean) }
-    def coordinates?; end
-
-    sig { returns(T.untyped) }
-    def coordinates_before_last_save; end
-
-    sig { returns(T.untyped) }
-    def coordinates_before_type_cast; end
-
-    sig { returns(T::Boolean) }
-    def coordinates_came_from_user?; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def coordinates_change; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def coordinates_change_to_be_saved; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def coordinates_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def coordinates_in_database; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def coordinates_previous_change; end
-
-    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
-    def coordinates_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
-
-    sig { returns(T.untyped) }
-    def coordinates_previously_was; end
-
-    sig { returns(T.untyped) }
-    def coordinates_was; end
-
-    sig { void }
-    def coordinates_will_change!; end
-
     sig { returns(T.nilable(::ActiveSupport::TimeWithZone)) }
     def created_at; end
 
@@ -826,11 +781,53 @@ class Photo
     sig { void }
     def id_will_change!; end
 
-    sig { void }
-    def restore_album_id!; end
+    sig { returns(T.untyped) }
+    def location; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def location=(value); end
+
+    sig { returns(T::Boolean) }
+    def location?; end
+
+    sig { returns(T.untyped) }
+    def location_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def location_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def location_came_from_user?; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def location_change; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def location_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def location_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def location_in_database; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def location_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def location_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def location_previously_was; end
+
+    sig { returns(T.untyped) }
+    def location_was; end
 
     sig { void }
-    def restore_coordinates!; end
+    def location_will_change!; end
+
+    sig { void }
+    def restore_album_id!; end
 
     sig { void }
     def restore_created_at!; end
@@ -845,6 +842,9 @@ class Photo
     def restore_id_value!; end
 
     sig { void }
+    def restore_location!; end
+
+    sig { void }
     def restore_updated_at!; end
 
     sig { returns(T.nilable([::String, ::String])) }
@@ -852,12 +852,6 @@ class Photo
 
     sig { returns(T::Boolean) }
     def saved_change_to_album_id?; end
-
-    sig { returns(T.nilable([T.untyped, T.untyped])) }
-    def saved_change_to_coordinates; end
-
-    sig { returns(T::Boolean) }
-    def saved_change_to_coordinates?; end
 
     sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
     def saved_change_to_created_at; end
@@ -882,6 +876,12 @@ class Photo
 
     sig { returns(T::Boolean) }
     def saved_change_to_id_value?; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def saved_change_to_location; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_location?; end
 
     sig { returns(T.nilable([T.nilable(::ActiveSupport::TimeWithZone), T.nilable(::ActiveSupport::TimeWithZone)])) }
     def saved_change_to_updated_at; end
@@ -938,9 +938,6 @@ class Photo
     def will_save_change_to_album_id?; end
 
     sig { returns(T::Boolean) }
-    def will_save_change_to_coordinates?; end
-
-    sig { returns(T::Boolean) }
     def will_save_change_to_created_at?; end
 
     sig { returns(T::Boolean) }
@@ -951,6 +948,9 @@ class Photo
 
     sig { returns(T::Boolean) }
     def will_save_change_to_id_value?; end
+
+    sig { returns(T::Boolean) }
+    def will_save_change_to_location?; end
 
     sig { returns(T::Boolean) }
     def will_save_change_to_updated_at?; end

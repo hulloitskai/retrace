@@ -27,6 +27,7 @@ class Album < ApplicationRecord
   friendly_id :title
 
   # == Associations
+  has_many :photos, dependent: :destroy
   has_many :imports, class_name: "ICloudPhotosImport", dependent: :destroy
   has_many :downloads, through: :imports
 
@@ -51,5 +52,11 @@ class Album < ApplicationRecord
   sig { void }
   def download_pending_later
     downloads.pending.find_each(&:download_later)
+  end
+
+  # == Photos
+  sig { void }
+  def create_photos_from_downloads_later
+    downloads.photo_missing.find_each(&:create_photo_later)
   end
 end

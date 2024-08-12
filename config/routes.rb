@@ -81,7 +81,11 @@ Rails.application.routes.draw do
   resource :contact_url, only: :show, export: true
 
   # == Albums
-  resources :albums, only: %i[create show], export: true
+  resources :albums, only: %i[create show], export: true do
+    member do
+      get :photos
+    end
+  end
 
   # == ICloud Photo Downloads
   resources :icloud_photo_downloads, only: %i[], export: true do

@@ -2,14 +2,14 @@
 # frozen_string_literal: true
 
 class BrowsingService < ApplicationService
-  # == Helpers
+  # == Methods
   sig { params(block: T.proc.params(page: Playwright::Page).void).void }
   def self.open_page(&block)
     Playwright.create(
       playwright_cli_executable_path: "playwright",
     ) do |playwright|
       if Rails.env.development?
-        playwright.chromium.launch(headless: false) do |browser|
+        playwright.chromium.launch(headless: Browsing.headless?) do |browser|
           page = browser.new_page
           yield(page)
         end

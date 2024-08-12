@@ -3,7 +3,7 @@
 
 class AlbumsController < ApplicationController
   # == Filters
-  before_action :set_album, only: :show
+  before_action :set_album, only: %i[show photos]
 
   # == Actions
   # GET /albums/1
@@ -11,8 +11,15 @@ class AlbumsController < ApplicationController
     raise "Missing album" unless @album
     render(inertia: "AlbumPage", props: {
       album: AlbumSerializer.one(@album),
-      downloads: ICloudPhotoDownloadSerializer
-        .many(@album.downloads.with_attached_image.chronological),
+      imports: ICloudPhotosImportSerializer.many(@album.imports),
+    })
+  end
+
+  # GET /albums/1/photos
+  def photos
+    raise "Missing album" unless @album
+    render(json: {
+      photos: PhotoSerializer.many(@album.photos),
     })
   end
 

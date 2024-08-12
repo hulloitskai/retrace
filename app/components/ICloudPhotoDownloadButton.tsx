@@ -17,6 +17,11 @@ const ICloudPhotoDownloadButton: FC<ICloudPhotoDownloadButtonProps> = ({
     },
     method: "post",
     descriptor: "download image",
+    onSuccess: () => {
+      showNotice({
+        message: "Image downloaded successfully.",
+      });
+    },
   });
 
   return (

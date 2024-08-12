@@ -293,6 +293,20 @@ class Album
 
     sig { params(value: T::Enumerable[::ICloudPhotosImport]).void }
     def imports=(value); end
+
+    sig { returns(T::Array[T.untyped]) }
+    def photo_ids; end
+
+    sig { params(ids: T::Array[T.untyped]).returns(T::Array[T.untyped]) }
+    def photo_ids=(ids); end
+
+    # This method is created by ActiveRecord on the `Album` class because it declared `has_many :photos`.
+    # 🔗 [Rails guide for `has_many` association](https://guides.rubyonrails.org/association_basics.html#the-has-many-association)
+    sig { returns(::Photo::PrivateCollectionProxy) }
+    def photos; end
+
+    sig { params(value: T::Enumerable[::Photo]).void }
+    def photos=(value); end
   end
 
   module GeneratedAssociationRelationMethods

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_08_142937) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_11_183726) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -314,11 +314,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_08_142937) do
   create_table "photos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "album_id", null: false
     t.uuid "download_id", null: false
-    t.geometry "coordinates", limit: {:srid=>0, :type=>"st_point"}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.index ["album_id"], name: "index_photos_on_album_id"
-    t.index ["download_id"], name: "index_photos_on_download_id"
+    t.index ["download_id"], name: "index_photos_on_download_id", unique: true
   end
 
   create_table "task_records", id: false, force: :cascade do |t|

@@ -36,6 +36,11 @@ class ICloudPhotosImport < ApplicationRecord
            inverse_of: :import,
            foreign_key: :import_id
 
+  sig { returns(Album) }
+  def album!
+    album or raise ActiveRecord::RecordNotFound, "Missing album"
+  end
+
   # == Validations
   validates :webpage_url,
             presence: true,
@@ -53,6 +58,16 @@ class ICloudPhotosImport < ApplicationRecord
   after_create_commit :initialize_downloads_later
 
   # == Downloads
+  sig { returns(Integer) }
+  def download_count
+    downloads.count
+  end
+
+  sig { returns(Integer) }
+  def completed_download_count
+    downloads.completed.count
+  end
+
   sig { void }
   def initialize_downloads
     BrowsingService.open_page do |page|
@@ -71,6 +86,7 @@ class ICloudPhotosImport < ApplicationRecord
         with_log_tags { logger.info("Processing carousel item #{i + 1}") }
         carousel_item_classes = content_frame
           .locator(".OneUpCarouselItem.is-center .ProgressiveImageElement")
+          .first
           .wait_for(state: "attached")
           .get_attribute("class")
           .split(" ")
@@ -97,6 +113,11 @@ class ICloudPhotosImport < ApplicationRecord
   sig { void }
   def initialize_downloads_later
     InitializeICloudPhotoDownloadsJob.perform_later(self)
+  end
+
+  sig { void }
+  def download_pending_later
+    downloads.pending.find_each(&:download_later)
   end
 
   private

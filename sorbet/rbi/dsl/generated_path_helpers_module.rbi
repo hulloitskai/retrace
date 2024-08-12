@@ -22,6 +22,9 @@ module GeneratedPathHelpersModule
   def destroy_user_session_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def download_icloud_photo_download_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_user_password_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -59,6 +62,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def password_strength_checks_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def photos_album_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def rails_blob_path(*args); end

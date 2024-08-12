@@ -187,6 +187,12 @@ gem "oj_serializers", "~> 2.0"
 # Generate Typescript from serializers
 gem "types_from_serializers", "~> 2.1"
 
+# Unzip files with RubyZip
+gem "rubyzip", "~> 2.3", require: 'zip'
+
+# Read EXIF data from images
+gem "exiftool", "~> 1.2"
+
 group :development, :test do
   # Auto-detect and warn about N+1 queries
   gem "bullet"

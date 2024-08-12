@@ -6,6 +6,7 @@ require "sorbet-runtime"
 module Google
   extend T::Sig
 
+  # == Accessors
   sig { returns(T.nilable(String)) }
   def self.client_id
     ENV["GOOGLE_CLIENT_ID"]

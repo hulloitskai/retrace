@@ -2,6 +2,9 @@
 # frozen_string_literal: true
 
 class ICloudPhotoDownloadSerializer < ApplicationSerializer
+  # == Configuration
+  object_as :download, model: "ICloudPhotoDownload"
+
   # == Attributes
   identifier
   attributes :webpage_url

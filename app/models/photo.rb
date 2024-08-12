@@ -8,7 +8,7 @@
 # Table name: photos
 #
 #  id          :uuid             not null, primary key
-#  coordinates :geometry         point, 0
+#  location    :geography        not null, point, 4326
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  album_id    :uuid             not null
@@ -17,7 +17,7 @@
 # Indexes
 #
 #  index_photos_on_album_id     (album_id)
-#  index_photos_on_download_id  (download_id)
+#  index_photos_on_download_id  (download_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -32,4 +32,40 @@ class Photo < ApplicationRecord
 
   # == Attachments
   has_one_attached :image
+
+  # == Geocoding
+  sig { returns(RGeo::Geographic::Factory) }
+  def self.location_factory
+    RGeo::Geographic.spherical_factory(srid: 4326)
+  end
+
+  # == Constructors
+  sig { params(download: ICloudPhotoDownload).returns(T.nilable(Photo)) }
+  def self.from_download(download)
+    image_blob = download.image_blob or return
+    location = image_blob.open { |file| location_from_exif(file) }
+    if location
+      download.create_photo(
+        album: download.album!,
+        download:,
+        image: image_blob,
+        location:,
+      )
+    else
+      with_log_tags do
+        logger.warn("No photo location found; skipping photo creation")
+      end
+      nil
+    end
+  end
+
+  private
+
+  # == Helpers
+  sig { params(file: Filelike).returns(T.nilable(RGeo::Feature::Point)) }
+  private_class_method def self.location_from_exif(file)
+    info = Exiftool.new(file.to_path)
+    latitude, longitude = info[:gps_latitude], info[:gps_longitude]
+    location_factory.point(longitude, latitude)
+  end
 end

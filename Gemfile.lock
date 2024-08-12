@@ -209,6 +209,8 @@ GEM
     et-orbi (1.2.11)
       tzinfo
     event_stream_parser (1.0.0)
+    exiftool (1.2.6)
+      json
     faraday (2.10.1)
       faraday-net_http (>= 2.0, < 3.2)
       logger
@@ -500,6 +502,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-vips (2.2.1)
       ffi (~> 1.12)
+    rubyzip (2.3.2)
     sentry-rails (5.17.1)
       railties (>= 5.0)
       sentry-ruby (~> 5.17.1)
@@ -622,6 +625,7 @@ DEPENDENCIES
   dotenv (~> 2.7)
   email_validator (~> 2.2)
   enumerize (~> 2.6)
+  exiftool (~> 1.2)
   faraday (~> 2.10)
   faraday-cookie_jar (~> 0.0.7)
   friendly_id (~> 5.5)
@@ -672,6 +676,7 @@ DEPENDENCIES
   ruby-lsp
   ruby-openai (~> 6.3)
   ruby-vips (~> 2.1)
+  rubyzip (~> 2.3)
   sentry-rails (~> 5.9)
   silencer (~> 2.0)
   sorbet
