@@ -290,6 +290,9 @@ class Photo
     sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Blob) }
     def build_image_blob(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ICloudPhotosImport) }
+    def build_import(*args, &blk); end
+
     sig { params(args: T.untyped, blk: T.untyped).returns(::Album) }
     def create_album(*args, &blk); end
 
@@ -314,6 +317,12 @@ class Photo
     sig { params(args: T.untyped, blk: T.untyped).returns(::ActiveStorage::Blob) }
     def create_image_blob!(*args, &blk); end
 
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ICloudPhotosImport) }
+    def create_import(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(::ICloudPhotosImport) }
+    def create_import!(*args, &blk); end
+
     sig { returns(T.nilable(::ICloudPhotoDownload)) }
     def download; end
 
@@ -332,6 +341,12 @@ class Photo
     sig { params(value: T.nilable(::ActiveStorage::Blob)).void }
     def image_blob=(value); end
 
+    sig { returns(T.nilable(::ICloudPhotosImport)) }
+    def import; end
+
+    sig { params(value: T.nilable(::ICloudPhotosImport)).void }
+    def import=(value); end
+
     sig { returns(T.nilable(::Album)) }
     def reload_album; end
 
@@ -344,6 +359,9 @@ class Photo
     sig { returns(T.nilable(::ActiveStorage::Blob)) }
     def reload_image_blob; end
 
+    sig { returns(T.nilable(::ICloudPhotosImport)) }
+    def reload_import; end
+
     sig { void }
     def reset_album; end
 
@@ -355,6 +373,9 @@ class Photo
 
     sig { void }
     def reset_image_blob; end
+
+    sig { void }
+    def reset_import; end
   end
 
   module GeneratedAssociationRelationMethods

@@ -8,6 +8,6 @@ class ICloudPhotosImportSerializer < ApplicationSerializer
   # == Attributes
   identifier
   attributes :created_at,
-             download_count: { type: :number },
+             download_count: { type: :number, nullable: true },
              completed_download_count: { type: :number }
 end

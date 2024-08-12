@@ -14,6 +14,18 @@ export interface AlbumPageProps extends SharedPageProps {
 }
 
 const AlbumPage: PageComponent<AlbumPageProps> = ({ album, imports }) => {
+  // == Photos
+  const { data: photosData, mutate } = useFetch<{ photos: Photo[] }>(
+    routes.albums.photos,
+    {
+      params: {
+        id: album.id,
+      },
+      descriptor: "load photos",
+    },
+  );
+  const { photos } = photosData ?? {};
+
   // == Imports
   useSubscription<{
     import: ICloudPhotosImport;
@@ -25,20 +37,10 @@ const AlbumPage: PageComponent<AlbumPageProps> = ({ album, imports }) => {
     onData: () => {
       // TODO: Maintain an in-memory state of the import statuses.
       router.reload({ only: ["imports"] });
+      mutate();
     },
   });
 
-  // == Photos
-  const { data: photosData } = useFetch<{ photos: Photo[] }>(
-    routes.albums.photos,
-    {
-      params: {
-        id: album.id,
-      },
-      descriptor: "load photos",
-    },
-  );
-  const { photos } = photosData ?? {};
   // const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   // const photosFeatures = useMemo(() => {
@@ -131,7 +133,10 @@ const AlbumPage: PageComponent<AlbumPageProps> = ({ album, imports }) => {
           {imports.map(photosImport => {
             const { createdAt, completedDownloadCount, downloadCount } =
               photosImport;
-            const progress = (completedDownloadCount / downloadCount) * 100;
+            const progress =
+              downloadCount !== null
+                ? (completedDownloadCount / downloadCount) * 100
+                : 100;
             return (
               <Card key={photosImport.id} p="xs">
                 <Stack gap={4}>
@@ -140,12 +145,19 @@ const AlbumPage: PageComponent<AlbumPageProps> = ({ album, imports }) => {
                   </Time>
                   <Progress
                     value={progress}
-                    animated={progress < 100}
+                    animated={progress < 100 || downloadCount === null}
                     color="accent.4"
                     size="xs"
                   />
                   <Text c="dimmed" size="xs">
-                    {completedDownloadCount} of {downloadCount} photos imported
+                    {downloadCount !== null ? (
+                      <>
+                        {completedDownloadCount} of {downloadCount} photos
+                        imported
+                      </>
+                    ) : (
+                      <>Indexing photos...</>
+                    )}
                   </Text>
                 </Stack>
               </Card>

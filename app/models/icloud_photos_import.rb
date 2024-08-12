@@ -28,6 +28,10 @@
 class ICloudPhotosImport < ApplicationRecord
   include Identifiable
 
+  # == Attributes
+  sig { returns(T::Boolean) }
+  def downloads_initialized? = downloads_initialized_at?
+
   # == Associations
   belongs_to :album, inverse_of: :imports
   has_many :downloads,
@@ -58,9 +62,9 @@ class ICloudPhotosImport < ApplicationRecord
   after_create_commit :initialize_downloads_later
 
   # == Downloads
-  sig { returns(Integer) }
+  sig { returns(T.nilable(Integer)) }
   def download_count
-    downloads.count
+    downloads.count if downloads_initialized?
   end
 
   sig { returns(Integer) }
@@ -98,7 +102,9 @@ class ICloudPhotosImport < ApplicationRecord
           skipped_urls << page.url
           with_log_tags { logger.info("  Found video; skipping") }
         end
-        page.expect_navigation { page.keyboard.press("ArrowRight") }
+        if i == item_count - 1
+          page.expect_navigation { page.keyboard.press("ArrowRight") }
+        end
       end
       update!(downloads_initialized_at: Time.current)
       with_log_tags do

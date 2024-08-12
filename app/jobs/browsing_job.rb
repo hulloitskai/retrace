@@ -6,7 +6,6 @@ class BrowsingJob < ApplicationJob
   good_job_control_concurrency_with key: BrowsingJob.name, perform_limit: 1
   retry_on GoodJob::ActiveJobExtensions::Concurrency::ConcurrencyExceededError,
            wait: ->(_executions) {
-             T.bind(self, BrowsingJob)
              existing_retries = GoodJob::Job.where(
                concurrency_key: "BrowsingJob",
              ).retried.count

@@ -29,9 +29,18 @@ class Photo < ApplicationRecord
   # == Associations
   belongs_to :album
   belongs_to :download, class_name: "ICloudPhotoDownload"
+  has_one :import, through: :download
+
+  sig { returns(ICloudPhotosImport) }
+  def import!
+    import or raise ActiveRecord::RecordNotFound, "Missing import"
+  end
 
   # == Attachments
   has_one_attached :image
+
+  # == Callbacks
+  after_create_commit :broadcast_album_imports
 
   # == Geocoding
   sig { returns(RGeo::Geographic::Factory) }
@@ -67,5 +76,11 @@ class Photo < ApplicationRecord
     info = Exiftool.new(file.to_path)
     latitude, longitude = info[:gps_latitude], info[:gps_longitude]
     location_factory.point(longitude, latitude)
+  end
+
+  # == Callback handlers
+  sig { void }
+  def broadcast_album_imports
+    AlbumImportsChannel.broadcast(import!)
   end
 end
