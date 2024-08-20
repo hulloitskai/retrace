@@ -1,5 +1,5 @@
 const APP_META_SITE_TYPE = "website";
-const APP_META_SITE_NAME = "Retrace";
+const APP_META_SITE_NAME = "Moment";
 const APP_META_SITE_DESCRIPTION =
   "Welcome to my little corner of the internet :)";
 const APP_META_SITE_IMAGE = "/banner.png";

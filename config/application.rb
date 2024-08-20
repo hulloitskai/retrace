@@ -10,7 +10,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 # == Configuration
-module Retrace
+module Moment
   extend T::Sig
 
   class Application < Rails::Application
@@ -133,6 +133,6 @@ module Retrace
   end
 
   # == Methods
-  sig { returns(Retrace::Application) }
-  def self.application = T.cast(Rails.application, Retrace::Application)
+  sig { returns(Moment::Application) }
+  def self.application = T.cast(Rails.application, Moment::Application)
 end

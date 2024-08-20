@@ -96,28 +96,11 @@ const AlbumPage: PageComponent<AlbumPageProps> = ({ album, imports }) => {
               {...{ latitude, longitude }}
               closeButton={false}
               anchor="bottom"
-              // onClick={() => {
-              //   setSelectedPhoto(photo);
-              // }}
             >
               <Image srcSet={image.srcSet} alt="" w={140} h={140} />
             </Popup>
           );
         })}
-        {/* <Source
-          id="photos"
-          type="geojson"
-          data={{ type: "FeatureCollection", features: photosFeatures }}
-        >
-          <Layer
-            id="photos"
-            type="circle"
-            paint={{
-              "circle-radius": 4,
-              "circle-color": "#cf4674",
-            }}
-          />
-        </Source> */}
       </Map>
       <LoadingOverlay
         visible={!photos}

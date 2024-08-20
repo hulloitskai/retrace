@@ -1,4 +1,4 @@
-# Retrace
+# Moment
 
 _Visualize your iPhone photo album on an animated map._
 
@@ -12,7 +12,7 @@ brew install docker rbenv nodenv yarn watchman overmind
 brew install libvips exiftool
 
 # set up environment
-git clone git@github.com:hulloitskai/retrace
-cd retrace
+git clone git@github.com:hulloitskai/moment
+cd moment
 bin/setup
 ```

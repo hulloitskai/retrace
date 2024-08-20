@@ -115,7 +115,7 @@ const AppLayout: FC<AppLayoutProps> = ({
             fz="md"
             className={classes.logo}
           >
-            Retrace
+            Moment
           </Button>
         </AppShell.Header>
         <AppShell.Main>

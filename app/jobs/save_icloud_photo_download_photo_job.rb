@@ -1,11 +1,11 @@
 # typed: strict
 # frozen_string_literal: true
 
-class CreatePhotoFromICloudPhotoDownloadJob < ApplicationJob
+class SaveICloudPhotoDownloadPhotoJob < ApplicationJob
   # == Configuration
   good_job_control_concurrency_with(
     key: -> {
-      T.bind(self, CreatePhotoFromICloudPhotoDownloadJob)
+      T.bind(self, SaveICloudPhotoDownloadPhotoJob)
       download = T.let(arguments.first!, ICloudPhotoDownload)
       "#{self.class.name}(#{download.to_gid})"
     },
@@ -15,6 +15,12 @@ class CreatePhotoFromICloudPhotoDownloadJob < ApplicationJob
   # == Job
   sig { params(download: ICloudPhotoDownload).void }
   def perform(download)
-    Photo.from_download(download)
+    download.save_photo
+  rescue => error
+    with_log_tags do
+      logger.warn(
+        "Failed to save photo from download #{download.id}: #{error.message}",
+      )
+    end
   end
 end

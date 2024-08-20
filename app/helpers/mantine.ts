@@ -43,7 +43,7 @@ export const THEME = createTheme({
     dark: stone,
     primary: stone,
     // accent: uglyGreen,
-    accent: DEFAULT_THEME.colors.pink,
+    accent: DEFAULT_THEME.colors.lime,
   },
   primaryColor: "primary",
   defaultRadius: 0,

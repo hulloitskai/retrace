@@ -9,7 +9,7 @@ class TestMailer < ApplicationMailer
   def test_email(model, current_user: nil)
     mail(
       to: Contact.email!,
-      subject: "Retrace!",
+      subject: "Moment!",
       inertia: "TestEmail",
       props: {
         model: model.to_h,

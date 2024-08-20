@@ -50,7 +50,7 @@ const EmailLayout: FC<EmailLayoutProps> = ({ header, preview, children }) => (
               <Text style={{ color: "var(--mantine-color-dimmed)" }}>
                 Sent by{" "}
                 <Link href="/" target="_blank" style={{ fontWeight: 600 }}>
-                  Retrace
+                  Moment
                 </Link>
                 . This email loves you.
               </Text>

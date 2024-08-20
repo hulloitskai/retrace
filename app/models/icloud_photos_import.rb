@@ -102,7 +102,7 @@ class ICloudPhotosImport < ApplicationRecord
           skipped_urls << page.url
           with_log_tags { logger.info("  Found video; skipping") }
         end
-        if i == item_count - 1
+        if i < item_count - 1
           page.expect_navigation { page.keyboard.press("ArrowRight") }
         end
       end

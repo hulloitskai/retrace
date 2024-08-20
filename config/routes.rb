@@ -98,7 +98,7 @@ Rails.application.routes.draw do
   defaults export: true do
     root "home#show"
   end
-  get "/src" => redirect("https://github.com/hulloitskai/retrace", status: 302)
+  get "/src" => redirect("https://github.com/hulloitskai/moment", status: 302)
 
   # == Development
   if Rails.env.development?

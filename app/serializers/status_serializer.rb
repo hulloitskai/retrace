@@ -11,6 +11,6 @@ class StatusSerializer < ApplicationSerializer
   end
   attributes errors: { type: :"any[]" }
   attribute :booted_at, type: :string do
-    Retrace.application.booted_at
+    Moment.application.booted_at
   end
 end

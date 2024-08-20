@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_11_183726) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_13_155530) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -317,6 +317,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_11_183726) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
+    t.datetime "taken_at", precision: nil, null: false
+    t.index ["album_id", "taken_at"], name: "index_photos_on_album_id_and_taken_at"
     t.index ["album_id"], name: "index_photos_on_album_id"
     t.index ["download_id"], name: "index_photos_on_download_id", unique: true
   end

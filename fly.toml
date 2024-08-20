@@ -1,4 +1,4 @@
-app = "retrace"
+app = "moment"
 primary_region = "den"
 kill_signal = "SIGINT"
 swap_size_mb = 1024
@@ -11,9 +11,9 @@ swap_size_mb = 1024
   strategy = "bluegreen"
 
 [env]
-  RAILS_DEFAULT_URL = "https://retrace.photos"
-  RAILS_MAILER_FROM = "Retrace <robot@retrace.photos>"
-  RAILS_MAILER_REPLY_TO = "Retrace Team <hello@retrace.photos>"
+  RAILS_DEFAULT_URL = "https://moment.earth"
+  RAILS_MAILER_FROM = "Moment <robot@moment.earth>"
+  RAILS_MAILER_REPLY_TO = "Moment Team <hello@moment.earth>"
   SENTRY_TRACES_SAMPLE_RATE = "0.1"
   SENTRY_PROFILES_SAMPLE_RATE = "0.1"
   PENCIEVE_RECEIVER_DISABLED = "true"

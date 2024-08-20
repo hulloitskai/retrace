@@ -9,6 +9,7 @@
 #
 #  id          :uuid             not null, primary key
 #  location    :geography        not null, point, 4326
+#  taken_at    :datetime         not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  album_id    :uuid             not null
@@ -16,8 +17,9 @@
 #
 # Indexes
 #
-#  index_photos_on_album_id     (album_id)
-#  index_photos_on_download_id  (download_id) UNIQUE
+#  index_photos_on_album_id               (album_id)
+#  index_photos_on_album_id_and_taken_at  (album_id,taken_at)
+#  index_photos_on_download_id            (download_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -48,35 +50,18 @@ class Photo < ApplicationRecord
     RGeo::Geographic.spherical_factory(srid: 4326)
   end
 
-  # == Constructors
-  sig { params(download: ICloudPhotoDownload).returns(T.nilable(Photo)) }
-  def self.from_download(download)
-    image_blob = download.image_blob or return
-    location = image_blob.open { |file| location_from_exif(file) }
-    if location
-      download.create_photo(
-        album: download.album!,
-        download:,
-        image: image_blob,
-        location:,
-      )
-    else
-      with_log_tags do
-        logger.warn("No photo location found; skipping photo creation")
-      end
-      nil
-    end
+  # == Helpers
+  sig { params(file: Filelike).returns(T::Hash[String, T.untyped]) }
+  def self.attributes_from_exif(file)
+    info = Exiftool.new(file.to_path)
+    latitude, longitude = info[:gps_latitude], info[:gps_longitude]
+    raise "Missing GPS coordinates" unless latitude && longitude
+    location = location_factory.point(longitude, latitude)
+    taken_at = info[:sub_sec_date_time_original] or raise "Missing timestamp"
+    { location:, taken_at: }
   end
 
   private
-
-  # == Helpers
-  sig { params(file: Filelike).returns(T.nilable(RGeo::Feature::Point)) }
-  private_class_method def self.location_from_exif(file)
-    info = Exiftool.new(file.to_path)
-    latitude, longitude = info[:gps_latitude], info[:gps_longitude]
-    location_factory.point(longitude, latitude)
-  end
 
   # == Callback handlers
   sig { void }

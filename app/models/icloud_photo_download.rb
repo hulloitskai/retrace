@@ -60,7 +60,7 @@ class ICloudPhotoDownload < ApplicationRecord
 
   # == Callbacks
   after_create_commit :download_later
-  after_update_commit :create_photo_later, if: :image_previously_attached?
+  after_update_commit :save_photo_later, if: :image_previously_attached?
   after_commit :broadcast_album_imports,
                if: -> {
                  T.bind(self, ICloudPhotoDownload)
@@ -141,9 +141,20 @@ class ICloudPhotoDownload < ApplicationRecord
   end
 
   # == Photos
+  sig { returns(Photo) }
+  def save_photo
+    image_blob = self.image_blob or raise "Missing downloaded image"
+    attributes = image_blob.open { |file| Photo.attributes_from_exif(file) }
+    photo || create_photo!(
+      album: album!,
+      image: image_blob,
+      **attributes,
+    )
+  end
+
   sig { void }
-  def create_photo_later
-    CreatePhotoFromICloudPhotoDownloadJob.perform_later(self)
+  def save_photo_later
+    SaveICloudPhotoDownloadPhotoJob.perform_later(self)
   end
 
   private

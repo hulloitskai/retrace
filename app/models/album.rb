@@ -56,7 +56,7 @@ class Album < ApplicationRecord
 
   # == Photos
   sig { void }
-  def create_photos_from_downloads_later
-    downloads.photo_missing.find_each(&:create_photo_later)
+  def save_download_photos_later
+    downloads.photo_missing.find_each(&:save_photo_later)
   end
 end

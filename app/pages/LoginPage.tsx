@@ -15,7 +15,7 @@ const LoginPage: PageComponent<LoginPageProps> = () => (
         <Text size="sm" c="dimmed" lh={1.3}>
           Welcome back to{" "}
           <Anchor component={Link} href="/" fw={600} c="primary.4">
-            Retrace
+            Moment
           </Anchor>
         </Text>
       </Stack>
