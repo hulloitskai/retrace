@@ -80,6 +80,9 @@ Rails.application.routes.draw do
   # == Contact
   resource :contact_url, only: :show, export: true
 
+  # == Photos
+  resources :photos, only: :new, path_names: { new: "" }, export: true
+
   # == Albums
   resources :albums, only: %i[create show], export: true do
     member do

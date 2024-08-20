@@ -5,7 +5,8 @@ import type { MapProps as _MapProps } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 export interface MapProps
-  extends Omit<_MapProps, "mapboxAccessToken" | "projection" | "terrain"> {}
+  extends Omit<_MapProps, "mapboxAccessToken" | "projection" | "terrain">,
+    Omit<BoxProps, "style"> {}
 
 const Map = forwardRef<MapRef, MapProps>(
   (
@@ -18,13 +19,14 @@ const Map = forwardRef<MapRef, MapProps>(
   ) => {
     const mapboxAccessToken = useMemo(() => getMeta("mapbox-access-token"), []);
     return (
-      <_Map
+      <Box
+        component={_Map}
         {...{ ref, mapboxAccessToken, mapStyle }}
         attributionControl={false}
         {...otherProps}
       >
         {children}
-      </_Map>
+      </Box>
     );
   },
 );
